@@ -1,11 +1,37 @@
 {
   "Version": 1,
-  "Hash": "qjMu/SoG5Y3zQG//GHPD04Dk9LHRNf1G0i15JnpvNGI=",
+  "Hash": "dfYo1UHTzJ68Kyt6GJfUOZ7jui9l9ahJeN3NeaArPgk=",
   "Source": "back-end",
   "BasePath": "_content/back-end",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "back-end\\wwwroot",
+      "Source": "back-end",
+      "ContentRoot": "C:\\Users\\maks\\Desktop\\all\\platform_famneja\\back-end\\back-end\\wwwroot\\",
+      "BasePath": "_content/back-end",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\maks\\Desktop\\all\\platform_famneja\\back-end\\back-end\\wwwroot\\txt\\1.txt",
+      "SourceId": "back-end",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\maks\\Desktop\\all\\platform_famneja\\back-end\\back-end\\wwwroot\\",
+      "BasePath": "_content/back-end",
+      "RelativePath": "txt/1.txt",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\txt\\1.txt"
+    }
+  ]
 }

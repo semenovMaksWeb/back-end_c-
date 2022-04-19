@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\maks\\Desktop\\all\\platform_famneja\\back-end\\back-end\\back-end\\back-end.csproj": {}
+    "C:\\Users\\maks\\Desktop\\all\\platform_famneja\\back-end\\back-end\\back-end.csproj": {}
   },
   "projects": {
-    "C:\\Users\\maks\\Desktop\\all\\platform_famneja\\back-end\\back-end\\back-end\\back-end.csproj": {
+    "C:\\Users\\maks\\Desktop\\all\\platform_famneja\\back-end\\back-end\\back-end.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\maks\\Desktop\\all\\platform_famneja\\back-end\\back-end\\back-end\\back-end.csproj",
+        "projectUniqueName": "C:\\Users\\maks\\Desktop\\all\\platform_famneja\\back-end\\back-end\\back-end.csproj",
         "projectName": "back-end",
-        "projectPath": "C:\\Users\\maks\\Desktop\\all\\platform_famneja\\back-end\\back-end\\back-end\\back-end.csproj",
+        "projectPath": "C:\\Users\\maks\\Desktop\\all\\platform_famneja\\back-end\\back-end\\back-end.csproj",
         "packagesPath": "C:\\Users\\maks\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\maks\\Desktop\\all\\platform_famneja\\back-end\\back-end\\back-end\\obj\\",
+        "outputPath": "C:\\Users\\maks\\Desktop\\all\\platform_famneja\\back-end\\back-end\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\maks\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,13 +40,21 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "MongoDB.Driver": {
+            "ADO.Net.Client.Core": {
               "target": "Package",
-              "version": "[2.15.0, )"
+              "version": "[1.4.4, )"
             },
-            "MongoDB.Entities": {
+            "EntityFramework6.Npgsql": {
               "target": "Package",
-              "version": "[20.26.3, )"
+              "version": "[6.4.3, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[7.0.0-preview.2, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.3.0, )"
             }
           },
           "imports": [

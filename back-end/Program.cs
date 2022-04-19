@@ -1,20 +1,32 @@
-using back_end.Map;
-using back_end.Collection;
-using MongoDB.Entities;
-
 var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
-// mongo
-await DB.InitAsync("system");
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 
-var apiTypeCollection = 
-    DB.Find<ApiComponentsCollection>()
-    .ExecuteAsync();
 
-Map map = new Map();
-await map.start();
-// mongo
-app.MapGet("/", () => apiTypeCollection);
 
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.UseStaticFiles();
+
+app.MapControllers();
+app.UseCors(builder => builder.WithOrigins("http://localhost:3000")
+                              .AllowAnyMethod()
+                              .AllowAnyHeader());
 app.Run();
