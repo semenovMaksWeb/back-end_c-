@@ -29,10 +29,10 @@ namespace back_end.Server
             switch (param)
             {
                 case "global":
-                    directive += "wwwroot/" + path;
+                    directive += $"wwwroot/{path}";
                     break;
                 case "server":
-                    directive += "Files/" + path;
+                    directive += $"Files/{path}";
                     break;
             }
             return directive;
@@ -52,6 +52,25 @@ namespace back_end.Server
             }
             return false;
         }
-       
+
+        /// <summary>
+        /// Метод который сохраняет файл
+        /// </summary>
+        /// <param name="content">данные которые нужно записать в файл.</param>
+        /// <param name="path">Путь до файла.</param>
+        ///
+        public void saveFile(string path, string content)
+        {
+            System.IO.File.WriteAllTextAsync(path, content);
+        }
+        /// <summary>
+        /// Метод который прочитывает файл по байтам
+        /// </summary>
+        /// <param name="path">Путь до файла.</param>
+        ///
+        public byte[] readFileByte(string path)
+        {
+            return System.IO.File.ReadAllBytes(path);
+        }
     }
 }

@@ -28,17 +28,30 @@ namespace back_end.Controllers
         {
            string directive = fileServer.getDirective(fileGetConfigDto.directive, fileGetConfigDto.path, _appEnvironment);
            string filepath = fileServer.getUrlFile(directive, fileGetConfigDto.name);
-            _logger.LogInformation("/file, Получить файл url- " + filepath);
+            _logger.LogInformation($"/file, Получить файл url- {filepath}");
             if (!fileServer.checkFile(filepath)) {
                 return NotFound("Файл не найден!");
            }
-            byte[] mas = System.IO.File.ReadAllBytes(filepath);
+            byte[] mas = fileServer.readFileByte(filepath);
             return File(mas, fileGetConfigDto.type, fileGetConfigDto.name);
         }
+        /// <summary>
+        ///  API точка, которая сохраняет новый файл
+        /// </summary>
+        /// <param name="fileSaveConfigDto"></param>
+        [HttpPost("/file/save")]
+        public void fileSave(FileSaveConfigDto fileSaveConfigDto)
+        {
+            string directive = fileServer.getDirective(fileSaveConfigDto.directive, fileSaveConfigDto.path, _appEnvironment);
+            string filepath = fileServer.getUrlFile(directive, fileSaveConfigDto.name);
+            fileServer.saveFile(filepath, fileSaveConfigDto.content);
+        }
+
     }
 }
 
 /*
+ * file/
 {
   "path": "txt",
   "name": "1.txt",
@@ -50,5 +63,13 @@ namespace back_end.Controllers
   "name": "1.json",
   "type": "application/json",
   "directive": "server"
+}
+
+ * file/save
+ * {
+  "path": "",
+  "name": "251.json",
+  "directive": "server",
+  "content": "{f:1, d:2, da:51, z:1}"
 }
  */
