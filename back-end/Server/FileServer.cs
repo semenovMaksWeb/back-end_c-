@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting; // для IWebHostEnvironment
+﻿using Word = Microsoft.Office.Interop.Word;
 
 namespace back_end.Server
 {
@@ -22,10 +22,10 @@ namespace back_end.Server
         /// </summary>
         /// <param name="param">Ключевое слово определяющие директиву.</param>
         /// <param name="path">Путь до файла.</param>
-        /// <param name="_appEnvironment">Служебная переменная текущая директива сервера.</param>
         /// <returns>Возвращает директиву файла</returns>
-        public string getDirective(string param, string path, IWebHostEnvironment _appEnvironment) {
-            string directive = _appEnvironment.ContentRootPath;
+        public string getDirective(string param, string path)
+        {
+            string directive = $"{Environment.CurrentDirectory}/";
             switch (param)
             {
                 case "global":
@@ -61,7 +61,7 @@ namespace back_end.Server
         ///
         public void saveFile(string path, string content)
         {
-            System.IO.File.WriteAllTextAsync(path, content);
+            System.IO.File.WriteAllText(path, content);
         }
         /// <summary>
         /// Метод который прочитывает файл по байтам
@@ -72,5 +72,28 @@ namespace back_end.Server
         {
             return System.IO.File.ReadAllBytes(path);
         }
+
+
+        /// <summary>
+        /// возвращает url путь до места где хранятся template docx
+        /// </summary>
+        public string getTemplateDocxUrl()
+        {
+            return $"{Environment.CurrentDirectory}/Files/template/docx";
+        }
+
+        public void saveTemplateDocx(string path_template, string filepath)
+        {
+            Word._Application oWord = new Word.Application();
+            Word._Document oDoc = oWord.Documents.Add(path_template);
+            // временные данные
+            oDoc.Bookmarks["date_1"].Range.Text = "01.04.2022";
+            oDoc.Bookmarks["date_2"].Range.Text = "19.04.2022";
+            oDoc.Bookmarks["theme_body"].Range.Text = "создана тема \n 1. черный плащ \n 2. черный волк \n 2. красная волга";
+            // временные данные
+            oDoc.SaveAs(FileName: filepath);
+            oDoc.Close();
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using back_end.Dto;
 using back_end.Server;
 using Microsoft.AspNetCore.Mvc;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace back_end.Controllers
 {
@@ -9,12 +10,10 @@ namespace back_end.Controllers
     public class FileControllers : ControllerBase
     {
         private readonly ILogger<FileControllers> _logger;
-        private readonly IWebHostEnvironment _appEnvironment;
         private readonly FileServer fileServer = new FileServer();
-        public FileControllers(ILogger<FileControllers> logger, IWebHostEnvironment appEnvironment)
+        public FileControllers(ILogger<FileControllers> logger)
         {
-            _logger = logger;
-            _appEnvironment = appEnvironment;
+            _logger = logger;  
         }
         /// <summary>
         ///  API точка, которая возвращает существующие файлы
@@ -26,7 +25,7 @@ namespace back_end.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<long> fileGet(FileGetConfigDto fileGetConfigDto)
         {
-           string directive = fileServer.getDirective(fileGetConfigDto.directive, fileGetConfigDto.path, _appEnvironment);
+           string directive = fileServer.getDirective(fileGetConfigDto.directive, fileGetConfigDto.path);
            string filepath = fileServer.getUrlFile(directive, fileGetConfigDto.name);
             _logger.LogInformation($"/file, Получить файл url- {filepath}");
             if (!fileServer.checkFile(filepath)) {
@@ -42,11 +41,28 @@ namespace back_end.Controllers
         [HttpPost("/file/save")]
         public void fileSave(FileSaveConfigDto fileSaveConfigDto)
         {
-            string directive = fileServer.getDirective(fileSaveConfigDto.directive, fileSaveConfigDto.path, _appEnvironment);
+            string directive = fileServer.getDirective(fileSaveConfigDto.directive, fileSaveConfigDto.path);
             string filepath = fileServer.getUrlFile(directive, fileSaveConfigDto.name);
             fileServer.saveFile(filepath, fileSaveConfigDto.content);
         }
 
+
+        [HttpPost("/file/template/docx")]
+        public ActionResult<long> templateDocx(FileTemplateDocxDto fileTemplateDocxDto)
+        {
+            string directive = fileServer.getDirective(fileTemplateDocxDto.directive, fileTemplateDocxDto.path);
+            string filepath = fileServer.getUrlFile(directive, fileTemplateDocxDto.name);
+            string template_filepath = $"{fileServer.getTemplateDocxUrl()}/{fileTemplateDocxDto.template_name}";
+            _logger.LogInformation($"/file/template/docx, path_template - {template_filepath}");
+            _logger.LogInformation($"/file/template/docx, filepath_save - {filepath}");
+            if (!fileServer.checkFile(template_filepath))
+            {
+                return NotFound("Файл с  не найден!");
+            }
+            fileServer.saveTemplateDocx(template_filepath, filepath);
+            byte[] mas = fileServer.readFileByte(filepath);
+            return File(mas, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fileTemplateDocxDto.name); 
+        }
     }
 }
 
@@ -72,4 +88,12 @@ namespace back_end.Controllers
   "directive": "server",
   "content": "{f:1, d:2, da:51, z:1}"
 }
+{
+  "template_name": "theme.dotx",
+  "path": "",
+  "name": "theme15.docx",
+  "directive": "server"
+}
+
+
  */
