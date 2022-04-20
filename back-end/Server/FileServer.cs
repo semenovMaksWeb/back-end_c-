@@ -82,15 +82,14 @@ namespace back_end.Server
             return $"{Environment.CurrentDirectory}/Files/template/docx";
         }
 
-        public void saveTemplateDocx(string path_template, string filepath)
+        public void saveTemplateDocx(string path_template, string filepath, Dictionary<string, string> content)
         {
             Word._Application oWord = new Word.Application();
             Word._Document oDoc = oWord.Documents.Add(path_template);
-            // временные данные
-            oDoc.Bookmarks["date_1"].Range.Text = "01.04.2022";
-            oDoc.Bookmarks["date_2"].Range.Text = "19.04.2022";
-            oDoc.Bookmarks["theme_body"].Range.Text = "создана тема \n 1. черный плащ \n 2. черный волк \n 2. красная волга";
-            // временные данные
+            foreach (var item in content)
+            {
+                oDoc.Bookmarks[item.Key].Range.Text = item.Value;
+            }
             oDoc.SaveAs(FileName: filepath);
             oDoc.Close();
         }

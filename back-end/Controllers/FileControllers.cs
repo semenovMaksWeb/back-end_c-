@@ -59,7 +59,7 @@ namespace back_end.Controllers
             {
                 return NotFound("Файл с  не найден!");
             }
-            fileServer.saveTemplateDocx(template_filepath, filepath);
+            fileServer.saveTemplateDocx(template_filepath, filepath, fileTemplateDocxDto.contetnt);
             byte[] mas = fileServer.readFileByte(filepath);
             return File(mas, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", fileTemplateDocxDto.name); 
         }
@@ -92,8 +92,11 @@ namespace back_end.Controllers
   "template_name": "theme.dotx",
   "path": "",
   "name": "theme15.docx",
-  "directive": "server"
+  "directive": "server",
+  "contetnt": {
+    "date_1": "01.04.2022",
+    "date_2": "01.05.2022",
+    "theme_body": "нет новых тем!"
+  }
 }
-
-
  */
