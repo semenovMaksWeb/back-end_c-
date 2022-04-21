@@ -82,7 +82,13 @@ namespace back_end.Server
             return $"{Environment.CurrentDirectory}/Files/template/docx";
         }
 
-        public void saveTemplateDocx(string path_template, string filepath, Dictionary<string, string> content)
+        /// <summary>
+        ///сохраняет новый файл по шаблону docx 
+        /// </summary>
+        /// <param name="content">массив данных который нужно вставить</param>
+        /// <param name="filepath">путь к файлу куда нужно сохранить</param>
+        /// <param name="path_template">путь к шаблону на основе которого нужно создать файл</param>
+        public void saveTemplateDocx(string path_template, string filepath, Dictionary<string, string> content, Dictionary<string, List<List<string>>> content_table)
         {
             Word._Application oWord = new Word.Application();
             Word._Document oDoc = oWord.Documents.Add(path_template);
@@ -90,9 +96,31 @@ namespace back_end.Server
             {
                 oDoc.Bookmarks[item.Key].Range.Text = item.Value;
             }
+            saveTemplateDocxTable(oDoc, content_table);
             oDoc.SaveAs(FileName: filepath);
             oDoc.Close();
         }
-
+        /// <summary>
+        /// метод который заполняет таблицы в шаблоне
+        /// </summary>
+        /// <param name="oDoc">ссылка на документ</param>
+        /// <param name="content_table">объект таблиц которые нужно заполнить</param>
+        public void saveTemplateDocxTable(Word._Document oDoc, Dictionary<string, List<List<string>>> content_table)
+        {
+            foreach (var table in content_table)
+            {
+                Word.Range wrdRng = oDoc.Bookmarks[table.Key].Range;
+                foreach (List<string> row_table in table.Value)
+                {
+                    Word.Row row = wrdRng.Rows.Add();
+                    int index = 0;
+                    foreach (string cells in row_table)
+                    {
+                        index++;
+                        row.Cells[index].Range.Text = cells;
+                    }
+                }
+            }
+        }
     }
 }
