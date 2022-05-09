@@ -1,6 +1,6 @@
-.vs
+/.vs/*
 back-end.sln
-back-end/obj/
-back-end/Properties/
-back-end/bin/
-back-end/Files/
+/back-end/bin/*
+/back-end/obj/*
+/back-end/Files/*
+back-end/bin/*

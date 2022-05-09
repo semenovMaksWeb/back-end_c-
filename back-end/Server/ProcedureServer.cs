@@ -10,7 +10,7 @@ namespace back_end.Server
         public async Task<List<dynamic>> convertBd(string sql)
         {
             List<dynamic> result = new List<dynamic>();
-            await db.OpenAsync();
+            db.Open();
             NpgsqlCommand sql_db = new NpgsqlCommand(sql, db);
             NpgsqlDataReader dr = sql_db.ExecuteReader();
             int count = dr.FieldCount;
@@ -24,7 +24,7 @@ namespace back_end.Server
                 }
                 result.Add(_object);
             }
-            await db.CloseAsync();
+            db.Close();
             return result;
         }
 
@@ -82,7 +82,7 @@ namespace back_end.Server
         }
         string paramsGeneratorString(dynamic value)
         {
-           return $"\"{value}\"";
+           return $"\'{value}\'";
         }
     }
 }

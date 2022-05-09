@@ -40,21 +40,17 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "ADO.Net.Client.Core": {
-              "target": "Package",
-              "version": "[1.4.4, )"
-            },
-            "EntityFramework6.Npgsql": {
-              "target": "Package",
-              "version": "[6.4.3, )"
-            },
             "Npgsql": {
               "target": "Package",
               "version": "[7.0.0-preview.2, )"
             },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.3.0, )"
+              "version": "[6.3.1, )"
             }
           },
           "imports": [

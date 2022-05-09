@@ -21,12 +21,4 @@ namespace back_end.Controllers
             return await procedureServer.procedure(name, json);
         }
     }
-
 }
-/*
-components.type_var_get
- {
-    "id": 2,
-    "name": "test"
- }
- */
