@@ -8,11 +8,11 @@ namespace back_end.Types.Screen
         [JsonProperty("id")]
         public int id { get; set; }
 
-        [JsonProperty("class")]
-        public object _class { get; set; }
+         [JsonProperty("class")]
+         public Dictionary<string, dynamic> _class { get; set; }
 
-        [JsonProperty("style")]
-        public object style { get; set; }
+         [JsonProperty("style")]
+         public Dictionary<string, dynamic> style { get; set; }
 
         [JsonProperty("type")]
         public string type { get; set; }
@@ -20,7 +20,7 @@ namespace back_end.Types.Screen
 
         [JsonProperty("params")]
         public List<Dictionary<string, TypeComponentsParamsApi>> _params { get; set; }
-        public Dictionary<string, dynamic> _params_front { get; set; }
+        public Dictionary<string, dynamic> _params_front { get; set; } = new Dictionary<string, dynamic>();
 
     }
 }
