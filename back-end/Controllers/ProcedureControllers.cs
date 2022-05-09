@@ -15,15 +15,16 @@ namespace back_end.Controllers
         }
 
         [HttpPost("/procedure")]
-        public string procedure(string name, dynamic json)
+        // 
+        public async Task<List<dynamic>> procedure(string name, dynamic json)
         {
-            string sql = $"select * from {name}({ procedureServer.paramsGenerator(json) })";
-            return sql;
+            return await procedureServer.procedure(name, json);
         }
     }
 
 }
 /*
+components.type_var_get
  {
     "id": 2,
     "name": "test"
