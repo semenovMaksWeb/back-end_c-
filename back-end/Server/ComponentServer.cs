@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json;
-using Npgsql;
+﻿using Npgsql;
 using System.Dynamic;
-using System.Text.Json;
 using back_end.Types.Screen;
 
 
@@ -22,13 +20,11 @@ namespace back_end.Server
             {
                 result = dr.GetValue(0);
             }
-            TypeScreenApi json =
-                JsonConvert.DeserializeObject<TypeScreenApi>(result);
+            TypeScreenApi json = System.Text.Json.JsonSerializer.Deserialize<TypeScreenApi>(result);
             json = componentsParseParams(json);
             db.Close();
             return json;
         }
-
 
         public TypeScreenApi componentsParseParams(TypeScreenApi json)
         {
