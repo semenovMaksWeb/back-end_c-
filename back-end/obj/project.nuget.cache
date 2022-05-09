@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "J7IuteYK5zBFyP+EoAlVtUmzfp/y+hES6G6/fDgHte2/hGQXp9MXt+sdtIPHAW9YmqTsFB2y+LtZ0HAMfqjYug==",
+  "dgSpecHash": "JHt6JWHm437Tx6NzNCzrS2v7F0D8nR3dtKbDDdfWGsEdv1ZnhC/6/o+d1SKZ7RCjPnNb5F2YlMsybw155LC9Fg==",
   "success": true,
   "projectFilePath": "C:\\Users\\maks\\Desktop\\all\\platform_famneja\\back-end\\back-end\\back-end.csproj",
   "expectedPackageFiles": [
@@ -19,6 +19,7 @@
     "C:\\Users\\maks\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
     "C:\\Users\\maks\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "C:\\Users\\maks\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\maks\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\maks\\.nuget\\packages\\npgsql\\7.0.0-preview.2\\npgsql.7.0.0-preview.2.nupkg.sha512",
     "C:\\Users\\maks\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\6.0.4\\npgsql.entityframeworkcore.postgresql.6.0.4.nupkg.sha512",
     "C:\\Users\\maks\\.nuget\\packages\\swashbuckle.aspnetcore\\6.3.1\\swashbuckle.aspnetcore.6.3.1.nupkg.sha512",

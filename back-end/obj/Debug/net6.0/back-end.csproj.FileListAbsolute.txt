@@ -40,3 +40,4 @@ C:\Users\maks\Desktop\all\platform_famneja\back-end\back-end\bin\Debug\net6.0\Mi
 C:\Users\maks\Desktop\all\platform_famneja\back-end\back-end\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\maks\Desktop\all\platform_famneja\back-end\back-end\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
 C:\Users\maks\Desktop\all\platform_famneja\back-end\back-end\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\maks\Desktop\all\platform_famneja\back-end\back-end\bin\Debug\net6.0\Newtonsoft.Json.dll
