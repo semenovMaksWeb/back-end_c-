@@ -7,6 +7,10 @@ namespace back_end.Server
     {
         public NpgsqlConnection db = Connection.Connection.connMain;
 
+        /// </summary>
+        ///  Метод, который вызывает функцию бд и парсит её ответ
+        /// <param name="sql"> sql запрос</param>
+        /// <returns>возвращает json ответ функции бд</returns>
         public async Task<List<dynamic>> convertBd(string sql)
         {
             List<dynamic> result = new List<dynamic>();
@@ -14,6 +18,7 @@ namespace back_end.Server
             NpgsqlCommand sql_db = new NpgsqlCommand(sql, db);
             NpgsqlDataReader dr = sql_db.ExecuteReader();
             int count = dr.FieldCount;
+            // ответ с бд прогнать
             while (dr.Read())
             {
                 dynamic _object = new ExpandoObject();
@@ -28,15 +33,26 @@ namespace back_end.Server
             return result;
         }
 
-        //
+        /// <summary>
+        ///  Метод, который генерирует строку запроса sql и вызывает convertBd
+        /// </summary>
+        /// <param name="name"> имя/путь до функции бд</param>
+        /// <param name="json">параметры передающий в функцию бд</param>
+        /// <returns>возвращает json ответ функции бд</returns>
         public async Task<List<dynamic>> procedure(string name, dynamic json)
         {
             string _params = paramsGenerator(json);
             string sql = $"select * from {name}({ _params })";
             return await convertBd(sql);
-    
         }
 
+        /// <summary>
+        /// Метод, конвертирует ответ функции бд под нужный тип данных
+        /// </summary>
+        /// <param name="type">тип переменной</param>
+        /// <param name="index">index</param>
+        /// <param name="dr">NpgsqlDataReader нужно для парса бд</param>
+        /// <returns></returns>
         public dynamic bdGenerator(TypeCode type, int index, NpgsqlDataReader dr)
         {
             switch (type)
@@ -54,7 +70,11 @@ namespace back_end.Server
             }
         }
 
-
+        /// <summary>
+        /// Метод генерирует строку которая будет передана как параметр для функции бд
+        /// </summary>
+        /// <param name="json">объект с параметрами для фунции бд</param>
+        /// <returns>Возвращает строку которая передает параметры в функцию бд</returns>
         public string paramsGenerator(dynamic json)
         {
             string _params = "";
@@ -70,6 +90,11 @@ namespace back_end.Server
             return _params;
         }
 
+        /// <summary>
+        /// Метод проверять нужно ли обработать параметр передающийся в функцию бд
+        /// </summary>
+        /// <param name="value">параметр который нужно обработать</param>
+        /// <returns>возвращает новое валидное значение</returns>
         dynamic checkParams(dynamic value)
         {
             switch (value.ValueKind)
@@ -80,6 +105,11 @@ namespace back_end.Server
                     return value;
             }
         }
+        /// <summary>
+        /// Метод конвертирует параметр передающий в функции в 'value'
+        /// </summary>
+        /// <param name="value">параметр который нужно обработать</param>
+        /// <returns>возвращает новую строку</returns>
         string paramsGeneratorString(dynamic value)
         {
            return $"\'{value}\'";

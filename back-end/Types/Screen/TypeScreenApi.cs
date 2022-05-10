@@ -5,6 +5,6 @@
         public TypeScreen screen { get; set; }
         public List<TypeBreadcrumbscs> breadcrumbs{ get; set;}
 
-        public List<TypeComponents> components { get; set; }
+        public Dictionary<string,TypeComponents> components { get; set; }
     }
 }

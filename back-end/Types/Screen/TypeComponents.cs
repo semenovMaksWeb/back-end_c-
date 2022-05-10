@@ -12,13 +12,28 @@ namespace back_end.Types.Screen
  
          public Dictionary<string, dynamic> style { get; set; }
 
- 
+        [JsonPropertyName("event")]
+        public Dictionary<string, List<TypeComponentsCallback>> _event { get; set; }
+
+        [JsonPropertyName("schema_table")]
+        public Dictionary<string, TypeComponentsSchemaTable> schema_table { get; set; }
+
+        [JsonPropertyName("schema_form")]
+        public List<TypeComponentsSchemaForm> schema_form { get; set; }
+
+        public List<TypeComponents> children { get; set; } 
+
+
         public string type { get; set; }
+        
         public List<TypeComponentsApi> api { get; set; }
 
         [JsonPropertyName("params")]
-        public List<Dictionary<string, TypeComponentsParamsApi>> _params { get; set; }
-        public Dictionary<string, dynamic> _params_front { get; set; } = new Dictionary<string, dynamic>();
+        public Dictionary<string, TypeComponentsParamsApi> _params { get; set; }
+        
+        public Dictionary<string, dynamic> params_front { get; set; } = new Dictionary<string, dynamic>();
+
+
 
     }
 }
