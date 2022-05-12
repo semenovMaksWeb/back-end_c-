@@ -32,19 +32,32 @@ namespace back_end.Server
             return json;
         }
 
+        public void componentsForm(TypeScreenApi json, string key_components)
+        {
+            if(json.components[key_components].type == "form")
+            {
+                json.components[key_components].params_front.Add("errors", new Dictionary<string, dynamic>());
+            }
+        }
+
         /// <summary>
         /// Парсит комноненты скрина под определеную струкутру для фронта
         /// </summary>
         /// <param name="json">json конфиг скрина</param>
         public void componentsParse(TypeScreenApi json)
         {
-            // прогнать компоненты
+            // прогнать компоненты параметры
             foreach (string key_components in json.components.Keys)
             {
+                componentsForm(json, key_components);
                 paramsConvert(json, key_components);
+                json.components[key_components]._params = null;
+            }
+            // прогнать компоненты schema_form
+            foreach (string key_components in json.components.Keys)
+            {
                 List<string> idDelete = schemaFormConvert(json, key_components);
                 deleteIdComponentSchemaForm(json, key_components, idDelete);
-                json.components[key_components]._params = null;
                 json.components[key_components].schema_form = null;
             }
         }
@@ -98,15 +111,44 @@ namespace back_end.Server
         /// <param name="key_components">ключ компонента</param>
         public void paramsConvert(TypeScreenApi json, string key_components)
         {
-            if (json.components[key_components]._params != null)
+            Dictionary<string, TypeComponentsParamsApi> _params = json.components[key_components]._params;
+            Dictionary<string, dynamic> params_front = json.components[key_components].params_front;
+            if (_params != null)
             {
                 // прогнать параметры
-                foreach (string key_params in json.components[key_components]._params.Keys)
+                foreach (string key_params in _params.Keys)
                 {
-                    json.components[key_components].params_front.Add(key_params, checkParamsType(json.components[key_components]._params[key_params]));
+                    // url есть
+                    if (_params[key_params].url != null)
+                    {
+                        paramsCreateUrl(_params, params_front, key_params);
+                    }
+                    // url нет
+                    else
+                    {
+                        params_front.Add(key_params, checkParamsType(_params[key_params]));
+                    }
                 }
             }
         }
+
+        /// <summary>
+        /// Функция подготавливает вложенность для компонентов
+        /// </summary>
+        /// <param name="_params">параметры с бэка</param>
+        /// <param name="params_front">параметры для фронта</param>
+        /// <param name="key_params">имя параметра</param>
+        public void paramsCreateUrl(Dictionary<string, TypeComponentsParamsApi> _params, Dictionary<string, dynamic> params_front, string key_params)
+        {
+                if (!params_front.ContainsKey(_params[key_params].url))
+                {
+                    params_front.Add(_params[key_params].url, new Dictionary<string, dynamic>());
+
+                }
+                params_front[_params[key_params].url].Add(key_params, checkParamsType(_params[key_params]));
+        }
+      
+
         
         /// <summary>
         /// меняет тип данных на указанный
@@ -119,7 +161,8 @@ namespace back_end.Server
             {
                 case "int":
                     return Convert.ToInt32(param.value);
-
+                case "object":
+                    return System.Text.Json.JsonSerializer.Deserialize<dynamic>(param.value);
                 case "boolean":
                     if(param.value == "true")
                     {
