@@ -26,7 +26,7 @@ namespace back_end.Types.Screen
 
         public string type { get; set; }
         
-        public List<TypeComponentsApi> api { get; set; }
+        public TypeComponentsApi api { get; set; }
 
         [JsonPropertyName("params")]
         public Dictionary<string, TypeComponentsParamsApi> _params { get; set; }
