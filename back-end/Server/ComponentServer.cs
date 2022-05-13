@@ -32,6 +32,38 @@ namespace back_end.Server
             return json;
         }
 
+        public void CallbackConvert(TypeScreenApi json, string key_components)
+        {
+            Dictionary<string, List<TypeComponentsCallback>> _event = json.components[key_components]._event;
+            if (json.components[key_components]._event != null)
+            {
+                foreach(string event_key in _event.Keys)
+                {
+                    _event[event_key].Sort((x, y) => x.order - y.order);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Обработка schemaTable у таблицы
+        /// </summary>
+        /// <param name="json"></param>
+        /// <param name="key_components"></param>
+        public void schemaTableConvert(TypeScreenApi json, string key_components)
+        {
+            if(json.components[key_components].type == "table" && json.components[key_components].schema_table != null)
+            {
+                //json.components[key_components].schema_table.Sort((x, y) => x.order - y.order);
+            }
+        }
+
+
+        /// <summary>
+        /// Функция обработки формы
+        /// </summary>
+        /// <param name="json">json конфиг скрина</param>
+        /// <param name="key_components">ключ компонента</param>
         public void componentsForm(TypeScreenApi json, string key_components)
         {
             if(json.components[key_components].type == "form")
@@ -46,6 +78,7 @@ namespace back_end.Server
         /// <param name="json">json конфиг скрина</param>
         public void componentsParse(TypeScreenApi json)
         {
+            json.breadcrumbs.Sort((x, y) => x.order - y.order);
             // прогнать компоненты параметры
             foreach (string key_components in json.components.Keys)
             {

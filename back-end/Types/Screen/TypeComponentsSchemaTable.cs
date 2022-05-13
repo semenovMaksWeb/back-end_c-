@@ -8,6 +8,7 @@
         public string title { get; set; }
         public int? button { get; set; }
         public int w { get; set; }
+        public int order { get; set; }
 
     }
 }

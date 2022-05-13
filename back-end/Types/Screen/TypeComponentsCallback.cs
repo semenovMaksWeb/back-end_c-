@@ -10,5 +10,7 @@ namespace back_end.Types.Screen
 
         [JsonPropertyName("params")]
         public dynamic _params { get; set; }
+
+        public int order { get; set; }
     }
 }
