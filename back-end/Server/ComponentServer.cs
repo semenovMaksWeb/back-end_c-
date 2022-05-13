@@ -32,6 +32,11 @@ namespace back_end.Server
             return json;
         }
 
+        /// <summary>
+        /// обработка калбеков у компонентов
+        /// </summary>
+        /// <param name="json">json конфиг скрина</param>
+        /// <param name="key_components">ключ компонента</param>
         public void CallbackConvert(TypeScreenApi json, string key_components)
         {
             Dictionary<string, List<TypeComponentsCallback>> _event = json.components[key_components]._event;
@@ -44,12 +49,11 @@ namespace back_end.Server
             }
         }
 
-
         /// <summary>
         /// Обработка schemaTable у таблицы
         /// </summary>
-        /// <param name="json"></param>
-        /// <param name="key_components"></param>
+        /// <param name="json">json конфиг скрина</param>
+        /// <param name="key_components">ключ компонента</param>
         public void schemaTableConvert(TypeScreenApi json, string key_components)
         {
             if(json.components[key_components].type == "table" && json.components[key_components].schema_table != null)
@@ -57,7 +61,6 @@ namespace back_end.Server
                 //json.components[key_components].schema_table.Sort((x, y) => x.order - y.order);
             }
         }
-
 
         /// <summary>
         /// Функция обработки формы
@@ -94,6 +97,7 @@ namespace back_end.Server
                 json.components[key_components].schema_form = null;
             }
         }
+        
         /// <summary>
         /// конвертирует schemaForm у компонента type=form
         /// </summary>
@@ -180,9 +184,7 @@ namespace back_end.Server
                 }
                 params_front[_params[key_params].url].Add(key_params, checkParamsType(_params[key_params]));
         }
-      
 
-        
         /// <summary>
         /// меняет тип данных на указанный
         /// </summary>
