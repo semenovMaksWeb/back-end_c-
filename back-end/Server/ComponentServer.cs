@@ -49,6 +49,19 @@ namespace back_end.Server
             }
         }
 
+        public void componentsTable(TypeScreenApi json, string key_components)
+        {
+            Dictionary<string, TypeComponentsParamsApi> _params = json.components[key_components]._params;
+            Dictionary<string, dynamic> params_front = json.components[key_components].params_front;
+            if(_params != null && json.components[key_components].type == "table")
+            {
+                if (!_params.ContainsKey("key_main"))
+                {
+                    params_front.Add("key_main", "id");
+                }
+            }
+        }
+
         /// <summary>
         /// Обработка schemaTable у таблицы
         /// </summary>
@@ -85,6 +98,7 @@ namespace back_end.Server
             // прогнать компоненты
             foreach (string key_components in json.components.Keys)
             {
+                componentsTable(json, key_components);
                 componentsForm(json, key_components);
                 CallbackConvert(json, key_components);
                 paramsConvert(json, key_components);
