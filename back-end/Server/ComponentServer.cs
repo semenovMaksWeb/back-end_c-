@@ -14,10 +14,10 @@ namespace back_end.Server
         /// </summary>
         /// <param name="id">id скрина</param>
         /// <returns> возвращает конфиг скрина</returns>
-        public dynamic screenGet(int id)
+        public async Task<dynamic> screenGet(int id)
         {
             dynamic result = new ExpandoObject();
-            db.Open();
+            await db.OpenAsync();
             string sql = @"select * from components.screen_platform_get(@id)";
             NpgsqlCommand sql_db = new NpgsqlCommand(sql, db);
             sql_db.Parameters.AddWithValue("@id", id);
@@ -28,7 +28,7 @@ namespace back_end.Server
             }
             TypeScreenApi json = System.Text.Json.JsonSerializer.Deserialize<TypeScreenApi>(result);
             componentsParse(json);
-            db.Close();
+            await db.CloseAsync();
             return json;
         }
 

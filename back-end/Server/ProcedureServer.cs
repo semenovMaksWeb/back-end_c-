@@ -14,7 +14,7 @@ namespace back_end.Server
         public async Task<dynamic> convertBd(string sql)
         {
             List<dynamic> result = new List<dynamic>();
-            db.Open();
+            await db.OpenAsync();
             NpgsqlCommand sql_db = new NpgsqlCommand(sql, db);
             NpgsqlDataReader dr = sql_db.ExecuteReader();
             int count = dr.FieldCount;
@@ -29,7 +29,7 @@ namespace back_end.Server
                 }
                 result.Add(_object);
             }
-            db.Close();
+            await db.CloseAsync();
             if(result.Count == 0)
             {
                 return null;
