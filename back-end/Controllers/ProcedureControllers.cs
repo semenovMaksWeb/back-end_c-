@@ -16,9 +16,9 @@ namespace back_end.Controllers
 
         [HttpPost("/procedure")]
         // 
-        public async Task<List<dynamic>> procedure(string name, dynamic json)
+        public async Task<dynamic> procedure(string name, string alias, dynamic json)
         {
-            return await procedureServer.procedure(name, json);
+            return await procedureServer.procedure(name, alias, json);
         }
     }
 }

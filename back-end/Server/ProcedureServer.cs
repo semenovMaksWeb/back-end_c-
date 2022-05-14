@@ -11,7 +11,7 @@ namespace back_end.Server
         ///  Метод, который вызывает функцию бд и парсит её ответ
         /// <param name="sql"> sql запрос</param>
         /// <returns>возвращает json ответ функции бд</returns>
-        public async Task<List<dynamic>> convertBd(string sql)
+        public async Task<dynamic> convertBd(string sql)
         {
             List<dynamic> result = new List<dynamic>();
             db.Open();
@@ -30,6 +30,14 @@ namespace back_end.Server
                 result.Add(_object);
             }
             db.Close();
+            if(result.Count == 0)
+            {
+                return null;
+            }
+            if(result.Count == 1)
+            {
+                return result[0];
+            }
             return result;
         }
 
@@ -39,10 +47,10 @@ namespace back_end.Server
         /// <param name="name"> имя/путь до функции бд</param>
         /// <param name="json">параметры передающий в функцию бд</param>
         /// <returns>возвращает json ответ функции бд</returns>
-        public async Task<List<dynamic>> procedure(string name, dynamic json)
+        public async Task<dynamic> procedure(string name, string alias, dynamic json)
         {
             string _params = paramsGenerator(json);
-            string sql = $"select * from {name}({ _params })";
+            string sql = $"select * from {name}({ _params }) {alias}";
             return await convertBd(sql);
         }
 
@@ -66,7 +74,7 @@ namespace back_end.Server
                 case  TypeCode.Int64:
                     return dr.GetInt64(index);
                 default:  
-                    return null;
+                    return "null";
             }
         }
 
@@ -101,6 +109,8 @@ namespace back_end.Server
             {
                 case JsonValueKind.String:
                     return paramsGeneratorString(value);
+                case JsonValueKind.Null:
+                    return "null";
                 default:
                     return value;
             }
