@@ -82,10 +82,11 @@ namespace back_end.Server
         public void componentsParse(TypeScreenApi json)
         {
             json.breadcrumbs.Sort((x, y) => x.order - y.order);
-            // прогнать компоненты параметры
+            // прогнать компоненты
             foreach (string key_components in json.components.Keys)
             {
                 componentsForm(json, key_components);
+                CallbackConvert(json, key_components);
                 paramsConvert(json, key_components);
                 json.components[key_components]._params = null;
             }
