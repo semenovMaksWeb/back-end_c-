@@ -13,9 +13,9 @@ namespace back_end.Controllers
             _logger = logger;
         }
         [HttpPost("/screen")]
-        public async Task<dynamic> screen(int id)
+        public async Task<dynamic> screen(string url)
         {
-            return await componentServer.screenGet(id);
+            return await componentServer.screenGet(url);
         }
     }
 }

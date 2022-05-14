@@ -14,13 +14,13 @@ namespace back_end.Server
         /// </summary>
         /// <param name="id">id скрина</param>
         /// <returns> возвращает конфиг скрина</returns>
-        public async Task<dynamic> screenGet(int id)
+        public async Task<dynamic> screenGet(string url)
         {
             dynamic result = new ExpandoObject();
             await db.OpenAsync();
-            string sql = @"select * from components.screen_platform_get(@id)";
+            string sql = @"select * from components.screen_platform_get_url(@url)";
             NpgsqlCommand sql_db = new NpgsqlCommand(sql, db);
-            sql_db.Parameters.AddWithValue("@id", id);
+            sql_db.Parameters.AddWithValue("@url", url);
             NpgsqlDataReader dr = sql_db.ExecuteReader();
             while (dr.Read())
             {
@@ -94,22 +94,27 @@ namespace back_end.Server
         /// <param name="json">json конфиг скрина</param>
         public void componentsParse(TypeScreenApi json)
         {
-            json.breadcrumbs.Sort((x, y) => x.order - y.order);
-            // прогнать компоненты
-            foreach (string key_components in json.components.Keys)
-            {
-                componentsTable(json, key_components);
-                componentsForm(json, key_components);
-                CallbackConvert(json, key_components);
-                paramsConvert(json, key_components);
-                json.components[key_components]._params = null;
+            if (json.breadcrumbs != null) {
+                json.breadcrumbs.Sort((x, y) => x.order - y.order);
             }
-            // прогнать компоненты schema_form
-            foreach (string key_components in json.components.Keys)
+            if(json.components != null)
             {
-                List<string> idDelete = schemaFormConvert(json, key_components);
-                deleteIdComponentSchemaForm(json, key_components, idDelete);
-                json.components[key_components].schema_form = null;
+                // прогнать компоненты
+                foreach (string key_components in json.components.Keys)
+                {
+                    componentsTable(json, key_components);
+                    componentsForm(json, key_components);
+                    CallbackConvert(json, key_components);
+                    paramsConvert(json, key_components);
+                    json.components[key_components]._params = null;
+                }
+                // прогнать компоненты schema_form
+                foreach (string key_components in json.components.Keys)
+                {
+                    List<string> idDelete = schemaFormConvert(json, key_components);
+                    deleteIdComponentSchemaForm(json, key_components, idDelete);
+                    json.components[key_components].schema_form = null;
+                }
             }
         }
         
