@@ -61,6 +61,15 @@ namespace back_end.Server
                 }
             }
         }
+        
+        public void breadcrumbsConvert(TypeScreenApi json)
+        {
+            if (json.breadcrumbs != null)
+            {
+                json.breadcrumbs.Sort((x, y) => x.order - y.order);
+                json.breadcrumbs[json.breadcrumbs.Count-1].url = null;
+            }
+        }
 
         /// <summary>
         /// Обработка schemaTable у таблицы
@@ -94,10 +103,8 @@ namespace back_end.Server
         /// <param name="json">json конфиг скрина</param>
         public void componentsParse(TypeScreenApi json)
         {
-            if (json.breadcrumbs != null) {
-                json.breadcrumbs.Sort((x, y) => x.order - y.order);
-            }
-            if(json.components != null)
+            breadcrumbsConvert(json);
+            if (json.components != null)
             {
                 // прогнать компоненты
                 foreach (string key_components in json.components.Keys)
