@@ -61,7 +61,11 @@ namespace back_end.Server
                 }
             }
         }
-        
+
+        /// <summary>
+        /// Обработка breadcrumbs скрина
+        /// </summary>
+        /// <param name="json">json конфиг скрина</param>
         public void breadcrumbsConvert(TypeScreenApi json)
         {
             if (json.breadcrumbs != null)
