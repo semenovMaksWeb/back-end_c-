@@ -230,12 +230,7 @@ namespace back_end.Server
                 case "object":
                     return System.Text.Json.JsonSerializer.Deserialize<dynamic>(param.value);
                 case "boolean":
-                    if(param.value == "true")
-                    {
-                        return true;
-                    }
-                    return false;
-
+                    return param.value == "true";
                 default:
                     return param.value;
             }
