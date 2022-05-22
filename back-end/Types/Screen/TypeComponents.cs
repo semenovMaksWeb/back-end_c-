@@ -21,8 +21,15 @@ namespace back_end.Types.Screen
         [JsonPropertyName("schema_form")]
         public List<TypeComponentsSchemaForm> schema_form { get; set; }
 
-        public List<TypeComponents> children { get; set; } 
+        public List<TypeComponents> children { get; set; }
 
+        public List<TypeChildrenIds> children_ids { get; set; } = new List<TypeChildrenIds>();
+
+        public string? tag { get; set; }
+
+        public int? order { get; set; }
+
+        public int? id_parent { get; set; }
 
         public string type { get; set; }
         

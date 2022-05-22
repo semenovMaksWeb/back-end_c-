@@ -49,6 +49,41 @@ namespace back_end.Server
             }
         }
 
+
+
+        /// <summary>
+        /// сортировка id_children в каждый компонент
+        /// </summary>
+        /// <param name="json">json конфиг скрина</param>
+        /// <param name="key_components">ключ компонента</param>
+        public void childrenArraySort(TypeScreenApi json, string key_components)
+        {
+            json.components[key_components].children_ids.Sort((x, y) => x.order - y.order);
+        }
+
+
+        /// <summary>
+        /// Сохранение id_children в каждый компонент
+        /// </summary>
+        /// <param name="json">json конфиг скрина</param>
+        /// <param name="key_components">ключ компонента</param>
+        public void childrenArraySave(TypeScreenApi json, string key_components)
+        {
+            int? id_parent = json.components[key_components].id_parent;
+            if (id_parent != null)
+            {
+                TypeChildrenIds typeChildrenIds = new TypeChildrenIds();
+                typeChildrenIds.id = Convert.ToInt32(key_components);
+                typeChildrenIds.order = (int)json.components[key_components].order;
+                json.components[id_parent.ToString()].children_ids.Add(typeChildrenIds);
+            }
+        }
+
+        /// <summary>
+        ///обработка компонента таблица
+        /// </summary>
+        /// <param name="json">json конфиг скрина</param>
+        /// <param name="key_components">ключ компонента</param>
         public void componentsTable(TypeScreenApi json, string key_components)
         {
             Dictionary<string, TypeComponentsParamsApi> _params = json.components[key_components]._params;
@@ -117,6 +152,7 @@ namespace back_end.Server
                     componentsForm(json, key_components);
                     CallbackConvert(json, key_components);
                     paramsConvert(json, key_components);
+                    childrenArraySave(json, key_components);
                     json.components[key_components]._params = null;
                 }
                 // прогнать компоненты schema_form
@@ -125,6 +161,7 @@ namespace back_end.Server
                     List<string> idDelete = schemaFormConvert(json, key_components);
                     deleteIdComponentSchemaForm(json, key_components, idDelete);
                     json.components[key_components].schema_form = null;
+                    childrenArraySort(json, key_components);
                 }
             }
         }
