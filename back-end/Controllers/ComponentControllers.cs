@@ -15,6 +15,7 @@ namespace back_end.Controllers
         [HttpPost("/screen")]
         public async Task<dynamic> screen(string url)
         {
+            _logger.LogInformation("Authorization-{0}", Request.Headers.Authorization);
             return await componentServer.screenGet(url);
         }
     }
